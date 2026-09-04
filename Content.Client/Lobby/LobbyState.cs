@@ -347,34 +347,26 @@ namespace Content.Client.Lobby
             }
         }
 
-        // Goobstation - heavily modified to add credits for lobby backgrounds
         private void UpdateLobbyBackground()
         {
+            if (_gameTicker.AnimatedLobbyScreen != null)
+            {
+                var lobbyBackground = _protoMan.Index(_gameTicker.AnimatedLobbyScreen.Value);
+                Lobby!.Background.SetRSI(_resourceCache.GetResource<RSIResource>(lobbyBackground.Path).RSI);
+
+                return;
+            }
+
             if (_gameTicker.LobbyBackground != null)
             {
                 var lobbyBackground = _protoMan.Index(_gameTicker.LobbyBackground.Value);
-                Lobby!.Background.Texture = _resourceCache.GetResource<TextureResource>(lobbyBackground.Background);
-
-                var name = string.IsNullOrEmpty(lobbyBackground.Name)
-                    ? Loc.GetString("lobby-state-background-unknown-title")
-                    : lobbyBackground.Name;
-
-                var artist = string.IsNullOrEmpty(lobbyBackground.Artist)
-                    ? Loc.GetString("lobby-state-background-unknown-artist")
-                    : lobbyBackground.Artist;
-
-                var markup = Loc.GetString("lobby-state-background-text",
-                    ("backgroundName", name),
-                    ("backgroundArtist", artist));
-
-                //Lobby!.LobbyBackground.SetMarkup(markup);
+                Lobby!.Background.SetTexture(_resourceCache.GetResource<TextureResource>(lobbyBackground.Background).Texture);
 
                 return;
             }
 
             _sawmill.Warning("_gameTicker.LobbyBackground was null! No lobby background selected.");
-            Lobby!.Background.Texture = null;
-            //Lobby!.LobbyBackground.SetMarkup(Loc.GetString("lobby-state-background-no-background-text"));
+            Lobby!.Background.SetRSI(null);
         }
 
         private void SetReady(bool newReady)
