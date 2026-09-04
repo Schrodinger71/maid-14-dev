@@ -347,6 +347,7 @@ namespace Content.Client.Lobby
             }
         }
 
+        // Goobstation - heavily modified to add credits for lobby backgrounds
         private void UpdateLobbyBackground()
         {
             if (_gameTicker.AnimatedLobbyScreen != null)
@@ -357,6 +358,7 @@ namespace Content.Client.Lobby
                 return;
             }
 
+            //Lobby!.LobbyBackground.SetMarkup(markup);
             if (_gameTicker.LobbyBackground != null)
             {
                 var lobbyBackground = _protoMan.Index(_gameTicker.LobbyBackground.Value);
@@ -367,6 +369,8 @@ namespace Content.Client.Lobby
 
             _sawmill.Warning("_gameTicker.LobbyBackground was null! No lobby background selected.");
             Lobby!.Background.SetRSI(null);
+            // Lobby!.Background.Texture = null;
+            //Lobby!.LobbyBackground.SetMarkup(Loc.GetString("lobby-state-background-no-background-text"));
         }
 
         private void SetReady(bool newReady)
