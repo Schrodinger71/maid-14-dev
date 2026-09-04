@@ -3,3 +3,9 @@
   background: /Textures/_Maid/LobbyScreens/brig.webp
   name: Brig
   artist: Waggier
+
+- type: lobbyBackground
+  id: Background
+  background: /Textures/_Maid/LobbyScreens/background.webp
+  name: Background
+  artist: Unknown
