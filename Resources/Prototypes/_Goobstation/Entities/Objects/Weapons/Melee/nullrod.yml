@@ -66,20 +66,20 @@
     weapons:
     - GodHand
     - HolyClaymore
-    # - Chainsword
-    # - SwordGlowing
-    # - HolyKatana
-    # - MultiverseBlade
-    # - VorpalScythe
+    - Chainsword
+    - SwordGlowing
+    - HolyKatana
+    - MultiverseBlade
+    - VorpalScythe
     - HighFrequencyBlade
-    # - SpellBlade
-    # - PossessedBlade
-    # - ChainsawHand
-    # - HolyWhip
-    # - HolyStaff
-    # - UnholyPitchfork
-    # - WarHammer
-    # - HyperTool
+    - SpellBlade
+    - PossessedBlade
+    - ChainsawHand
+    - HolyWhip
+    - HolyStaff
+    - UnholyPitchfork
+    - WarHammer
+    - HyperTool
   - type: HolyWeapon
   # Maid-Tweak-End
 
