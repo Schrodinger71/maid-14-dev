@@ -99,7 +99,8 @@
     - ChaplainUndeterminedBible
     - RubberStampChaplain
     - Nullrod
-    - ArmamentsBeacon # Goobstation
+    # - ArmamentsBeacon # Goobstation
+    - MaidArmamentsBeacon   # Maid-Tweak
 
 - type: chameleonOutfit
   id: ChaplainChameleonOutfit
