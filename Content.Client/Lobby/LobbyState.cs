@@ -81,6 +81,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using System.Numerics;
 using Content.Client._RMC14.LinkAccount;
 using Content.Client.Audio;
 using Content.Client.Changelog;
@@ -98,6 +99,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -214,9 +216,14 @@ namespace Content.Client.Lobby
                     .Take(15)
                     .ToList();
 
-                // Changelog markup body.
-                var text = string.Empty;
+                // Fill the container with controls (same pattern as the ChangelogTab window,
+                // so long texts wrap and the ScrollContainer can scroll).
+                var body = Lobby.ChangelogBodyContainer;
+                body.Children.Clear();
+                Lobby.ChangelogScrollContainer.SetScrollValue(default);
+
                 DateTime? lastDay = null;
+                var firstEntry = true;
 
                 foreach (var entry in entries)
                 {
@@ -228,8 +235,8 @@ namespace Content.Client.Lobby
                     // Day header (only when the day changes).
                     if (lastDay != day)
                     {
-                        if (lastDay != null)
-                            text += "\n";
+                        if (!firstEntry)
+                            body.AddChild(new Control { MinSize = new Vector2(0, 6) });
 
                         string dayNice;
                         var today = DateTime.Today;
@@ -240,12 +247,22 @@ namespace Content.Client.Lobby
                         else
                             dayNice = day.ToShortDateString();
 
-                        text += $"[color=#C49A3C]{FormattedMessage.EscapeText(dayNice)}[/color]\n";
+                        body.AddChild(new Label
+                        {
+                            Text = dayNice,
+                            StyleClasses = { "LabelHeading" },
+                            Margin = new Thickness(0, 4, 0, 2)
+                        });
                         lastDay = day;
                     }
 
+                    firstEntry = false;
+
                     var author = FormattedMessage.EscapeText(entry.Author);
-                    text += Loc.GetString("changelog-author-changed", ("author", author)) + "\n";
+                    var authorLabel = new RichTextLabel { Margin = new Thickness(2, 2, 0, 0) };
+                    authorLabel.SetMessage(FormattedMessage.FromMarkupOrThrow(
+                        Loc.GetString("changelog-author-changed", ("author", author))));
+                    body.AddChild(authorLabel);
 
                     foreach (var change in entry.Changes)
                     {
@@ -258,11 +275,16 @@ namespace Content.Client.Lobby
                             ChangelogManager.ChangelogLineType.Tweak => ("~", "#6E96D1"),
                             _ => ("?", "#888888")
                         };
-                        text += $"  [color={color}]{marker}[/color] {message}\n";
+
+                        var changeLabel = new RichTextLabel
+                        {
+                            Margin = new Thickness(14, 1, 0, 2)
+                        };
+                        changeLabel.SetMessage(FormattedMessage.FromMarkupOrThrow(
+                            $"[color={color}]{marker}[/color] {message}"));
+                        body.AddChild(changeLabel);
                     }
                 }
-
-                Lobby.ChangelogText.SetMessage(FormattedMessage.FromMarkupOrThrow(text));
             }
             catch (Exception e)
             {

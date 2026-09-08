@@ -208,6 +208,7 @@ namespace Content.Client.Stylesheets
         public const string StyleClassHandSlotHighlight = "HandSlotHighlight";
         public const string StyleClassChatPanel = "ChatPanel";
         public const string StyleClassChatSubPanel = "ChatSubPanel";
+        public const string StyleClassHiddenScrollbar = "HiddenScrollbar";
         public const string StyleClassTransparentBorderedWindowPanel = "TransparentBorderedWindowPanel";
         public const string StyleClassHotbarPanel = "HotbarPanel";
         public const string StyleClassTooltipPanel = "tooltipBox";
@@ -435,6 +436,17 @@ namespace Content.Client.Stylesheets
                 Texture = borderedTransparentWindowBackgroundTex,
             };
             borderedTransparentWindowBackground.SetPatchMargin(StyleBox.Margin.All, 3);
+
+            // Invisible scroll bar grabber (used by StyleClassHiddenScrollbar) - scrolling keeps working,
+            // but no bar is drawn.
+            var invisibleGrabber = new StyleBoxFlat
+            {
+                BackgroundColor = Color.Transparent,
+                ContentMarginLeftOverride = 1,
+                ContentMarginRightOverride = 1,
+                ContentMarginTopOverride = 1,
+                ContentMarginBottomOverride = 1,
+            };
 
             var hotbarBackground = new StyleBoxTexture
             {
@@ -854,6 +866,43 @@ namespace Content.Client.Stylesheets
                     new[]
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, borderedTransparentWindowBackground),
+                    }),
+                // Hidden (invisible) scroll bars: keep scrolling working but draw no bar.
+                new StyleRule(
+                    new SelectorElement(typeof(VScrollBar), new[] {StyleClassHiddenScrollbar}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(ScrollBar.StylePropertyGrabber, invisibleGrabber),
+                    }),
+                new StyleRule(
+                    new SelectorElement(typeof(VScrollBar), new[] {StyleClassHiddenScrollbar}, null, new[] {ScrollBar.StylePseudoClassHover}),
+                    new[]
+                    {
+                        new StyleProperty(ScrollBar.StylePropertyGrabber, invisibleGrabber),
+                    }),
+                new StyleRule(
+                    new SelectorElement(typeof(VScrollBar), new[] {StyleClassHiddenScrollbar}, null, new[] {ScrollBar.StylePseudoClassGrabbed}),
+                    new[]
+                    {
+                        new StyleProperty(ScrollBar.StylePropertyGrabber, invisibleGrabber),
+                    }),
+                new StyleRule(
+                    new SelectorElement(typeof(HScrollBar), new[] {StyleClassHiddenScrollbar}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(ScrollBar.StylePropertyGrabber, invisibleGrabber),
+                    }),
+                new StyleRule(
+                    new SelectorElement(typeof(HScrollBar), new[] {StyleClassHiddenScrollbar}, null, new[] {ScrollBar.StylePseudoClassHover}),
+                    new[]
+                    {
+                        new StyleProperty(ScrollBar.StylePropertyGrabber, invisibleGrabber),
+                    }),
+                new StyleRule(
+                    new SelectorElement(typeof(HScrollBar), new[] {StyleClassHiddenScrollbar}, null, new[] {ScrollBar.StylePseudoClassGrabbed}),
+                    new[]
+                    {
+                        new StyleProperty(ScrollBar.StylePropertyGrabber, invisibleGrabber),
                     }),
                 // inventory slot background
                 new StyleRule(

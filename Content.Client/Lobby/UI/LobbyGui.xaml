@@ -115,9 +115,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                     <!-- Spacer pushing the changelog panel toward the right -->
                     <Control HorizontalExpand="True" />
 
-                    <!-- COLUMN 2: collapsible changelog (narrow, aligned right) -->
-                    <BoxContainer Orientation="Vertical" MinSize="300 0" MaxSize="420 Infinity"
-                                  Margin="0 0 0 0" SeparationOverride="8">
+                    <!-- COLUMN 2: changelog (collapsible, boxed, narrow, right-aligned) -->
+                    <BoxContainer Orientation="Vertical" SetWidth="380"
+                                  Margin="0 0 0 0" HorizontalAlignment="Right" VerticalExpand="True"
+                                  SeparationOverride="2">
                         <!-- Header toggle button -->
                         <ContainerButton Name="ChangelogToggleButton" Access="Public" ToggleMode="True"
                                          HorizontalAlignment="Left">
@@ -127,11 +128,17 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                 <Label Text="Список изменений:" StyleClasses="LabelHeading" />
                             </BoxContainer>
                         </ContainerButton>
-                        <!-- Body -->
-                        <ScrollContainer Name="ChangelogScrollContainer" Access="Public"
-                                         VerticalExpand="True" HorizontalExpand="True">
-                            <RichTextLabel Name="ChangelogText" Access="Public" VerticalExpand="True" StyleClasses="LabelSmall" />
-                        </ScrollContainer>
+                        <!-- Body: boxed panel, hidden entirely when collapsed -->
+                        <PanelContainer Name="ChangelogBodyPanel" Access="Public"
+                                        StyleClasses="TransparentBorderedWindowPanel"
+                                        VerticalExpand="True" HorizontalExpand="True">
+                            <ScrollContainer Name="ChangelogScrollContainer" Access="Public"
+                                             VerticalExpand="True" HorizontalExpand="True"
+                                             HScrollEnabled="False" ReserveScrollbarSpace="False">
+                                <BoxContainer Orientation="Vertical" Name="ChangelogBodyContainer" Access="Public"
+                                              HorizontalExpand="True" Margin="0 0 8 0" />
+                            </ScrollContainer>
+                        </PanelContainer>
                     </BoxContainer>
 
                     <!-- COLUMN 3: server info + chat (single panel, announcement is part of chat) -->
