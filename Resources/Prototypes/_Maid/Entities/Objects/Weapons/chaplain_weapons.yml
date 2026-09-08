@@ -170,7 +170,7 @@
   - type: Tool
     qualities:
       - Sawing
-    speed: 0.5
+    speedModifier: 0.5
 
 - type: entity
   name: священная плеть
