@@ -17,7 +17,7 @@
   - type: ActivatableUI
     key: enum.SelectArmorUi.Key
     inHandsOnly: true
-    closeOnHandDeselect: true  
+    # closeOnHandDeselect: true
   - type: UserInterface
     interfaces:
       enum.SelectArmorUi.Key:
@@ -28,7 +28,7 @@
     - ClothingOuterArmorClock
     - ClothingOuterArmorStudent
     - ClothingOuterArmorAncient
-    - ClothingOuterArmorWitchHunter
+    - ClothingOuterArmorWitchhunter
     - ClothingOuterArmorAdept
     helmets:
     - ClothingHeadHatHelmetTemplar
