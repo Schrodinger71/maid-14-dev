@@ -81,7 +81,14 @@ namespace Content.Client.Lobby.UI
             MenuRulesButton.OnPressed += _ => new RulesAndInfoWindow().Open();
             MenuGuidebookButton.OnPressed += _ => UserInterfaceManager.GetUIController<GuidebookUIController>().ToggleGuidebook();
             MenuChangelogButton.OnPressed += _ => UserInterfaceManager.GetUIController<ChangelogUIController>().ToggleWindow();
-            ChangelogCollapsible.BodyVisible = true;
+
+            // Changelog collapse/expand toggle (starts expanded).
+            ChangelogToggleButton.Pressed = true;
+            ChangelogToggleButton.OnToggled += args =>
+            {
+                ChangelogScrollContainer.Visible = args.Pressed;
+                ChangelogToggleArrow.Text = args.Pressed ? "▼" : "▶";
+            };
         }
 
         public void SwitchState(LobbyGuiState state)

@@ -112,16 +112,26 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         </BoxContainer>
                     </BoxContainer>
 
-                    <!-- COLUMN 2: collapsible changelog -->
-                    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True"
+                    <!-- Spacer pushing the changelog panel toward the right -->
+                    <Control HorizontalExpand="True" />
+
+                    <!-- COLUMN 2: collapsible changelog (narrow, aligned right) -->
+                    <BoxContainer Orientation="Vertical" MinSize="300 0" MaxSize="420 Infinity"
                                   Margin="0 0 0 0" SeparationOverride="8">
-                        <!-- Collapsible changelog -->
-                        <Collapsible Name="ChangelogCollapsible" HorizontalExpand="True" VerticalExpand="True">
-                            <CollapsibleHeading Title="Список изменений:" />
-                            <CollapsibleBody VerticalExpand="True" HorizontalExpand="True">
-                                <RichTextLabel Name="ChangelogText" VerticalExpand="True" StyleClasses="LabelSmall" />
-                            </CollapsibleBody>
-                        </Collapsible>
+                        <!-- Header toggle button -->
+                        <ContainerButton Name="ChangelogToggleButton" Access="Public" ToggleMode="True"
+                                         HorizontalAlignment="Left">
+                            <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="2 2 2 2">
+                                <Label Name="ChangelogToggleArrow" Text="▼" StyleClasses="LabelHeading"
+                                       Margin="0 0 0 1" />
+                                <Label Text="Список изменений:" StyleClasses="LabelHeading" />
+                            </BoxContainer>
+                        </ContainerButton>
+                        <!-- Body -->
+                        <ScrollContainer Name="ChangelogScrollContainer" Access="Public"
+                                         VerticalExpand="True" HorizontalExpand="True">
+                            <RichTextLabel Name="ChangelogText" Access="Public" VerticalExpand="True" StyleClasses="LabelSmall" />
+                        </ScrollContainer>
                     </BoxContainer>
 
                     <!-- COLUMN 3: server info + chat (single panel, announcement is part of chat) -->

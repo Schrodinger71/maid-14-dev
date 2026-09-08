@@ -80,8 +80,10 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Linq;
 using Content.Client._RMC14.LinkAccount;
 using Content.Client.Audio;
+using Content.Client.Changelog;
 using Content.Client.GameTicking.Managers;
 using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
@@ -98,6 +100,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using Content.Shared._Maid.GameTicking.Prototypes;
 
 namespace Content.Client.Lobby
@@ -115,6 +118,7 @@ namespace Content.Client.Lobby
         [Dependency] private readonly IPrototypeManager _protoMan = default!; // Goobstation - credits
         [Dependency] private readonly LinkAccountManager _linkAccount = default!; // RMC - Patreon
         [Dependency] private readonly ClientsidePlaytimeTrackingManager _playtimeTracking = default!;
+        [Dependency] private readonly ChangelogManager _changelog = default!;
         private ProtoId<AnimatedLobbyScreenPrototype>? _lastAnimatedScreen;
 
         private ISawmill _sawmill = default!; // Goobstation
@@ -155,6 +159,7 @@ namespace Content.Client.Lobby
             //Lobby.RightSide.SetWidth = width;
 
             UpdateLobbyUi();
+            LoadLobbyChangelog();
 
             Lobby.CharacterPreview.CharacterSetupButton.OnPressed += OnSetupPressed;
             Lobby.CharacterPreview.PatronPerks.OnPressed += OnPatronPerksPressed;
@@ -189,6 +194,80 @@ namespace Content.Client.Lobby
         {
             // Yeah I hate this but LobbyState contains all the badness for now.
             Lobby?.SwitchState(state);
+        }
+
+        private async void LoadLobbyChangelog()
+        {
+            try
+            {
+                // Load all changelog yml files (runs on a background thread).
+                var changelogs = await _changelog.LoadChangelog();
+
+                // We only want the Maid changelog (Resources/Changelog/MaidChangelog.yml -> Name: Maidlog).
+                var maidChangelog = changelogs.FirstOrDefault(c => c.Name == "Maidlog");
+                if (maidChangelog == null || Lobby == null)
+                    return;
+
+                // Newest entries first (only the latest ones, full list is in the changelog window).
+                var entries = maidChangelog.Entries
+                    .OrderByDescending(e => e.Time)
+                    .Take(15)
+                    .ToList();
+
+                // Changelog markup body.
+                var text = string.Empty;
+                DateTime? lastDay = null;
+
+                foreach (var entry in entries)
+                {
+                    if (entry.Changes.Count == 0)
+                        continue;
+
+                    var day = entry.Time.ToLocalTime().Date;
+
+                    // Day header (only when the day changes).
+                    if (lastDay != day)
+                    {
+                        if (lastDay != null)
+                            text += "\n";
+
+                        string dayNice;
+                        var today = DateTime.Today;
+                        if (day == today)
+                            dayNice = Loc.GetString("changelog-today");
+                        else if (day == today.AddDays(-1))
+                            dayNice = Loc.GetString("changelog-yesterday");
+                        else
+                            dayNice = day.ToShortDateString();
+
+                        text += $"[color=#C49A3C]{FormattedMessage.EscapeText(dayNice)}[/color]\n";
+                        lastDay = day;
+                    }
+
+                    var author = FormattedMessage.EscapeText(entry.Author);
+                    text += Loc.GetString("changelog-author-changed", ("author", author)) + "\n";
+
+                    foreach (var change in entry.Changes)
+                    {
+                        var message = FormattedMessage.EscapeText(change.Message);
+                        var (marker, color) = change.Type switch
+                        {
+                            ChangelogManager.ChangelogLineType.Add => ("+", "#6ED18D"),
+                            ChangelogManager.ChangelogLineType.Remove => ("-", "#D16E6E"),
+                            ChangelogManager.ChangelogLineType.Fix => ("!", "#D1BA6E"),
+                            ChangelogManager.ChangelogLineType.Tweak => ("~", "#6E96D1"),
+                            _ => ("?", "#888888")
+                        };
+                        text += $"  [color={color}]{marker}[/color] {message}\n";
+                    }
+                }
+
+                Lobby.ChangelogText.SetMessage(FormattedMessage.FromMarkupOrThrow(text));
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error($"Failed to load lobby changelog: {e}");
+            }
         }
 
         private void OnSetupPressed(BaseButton.ButtonEventArgs args)
