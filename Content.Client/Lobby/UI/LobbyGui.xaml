@@ -112,7 +112,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         </BoxContainer>
                     </BoxContainer>
 
-                    <!-- COLUMN 2: collapsible changelog + round countdown -->
+                    <!-- COLUMN 2: collapsible changelog -->
                     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True"
                                   Margin="0 0 0 0" SeparationOverride="8">
                         <!-- Collapsible changelog -->
@@ -122,11 +122,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                 <RichTextLabel Name="ChangelogText" VerticalExpand="True" StyleClasses="LabelSmall" />
                             </CollapsibleBody>
                         </Collapsible>
-                        <!-- Round start countdown -->
-                        <Label Name="StartTime" Access="Public" Align="Center"
-                               FontColorOverride="{x:Static maths:Color.DarkGray}"
-                               StyleClasses="LabelBig" HorizontalExpand="True"
-                               Margin="0 6 0 6" />
                     </BoxContainer>
 
                     <!-- COLUMN 3: server info + chat (single panel, announcement is part of chat) -->
@@ -144,6 +139,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                             <Label Name="StationTime" Access="Public"
                                    FontColorOverride="{x:Static maths:Color.LightGray}"
                                    Margin="3 3 3 10" HorizontalAlignment="Left" />
+                            <!-- Round start countdown (inside server info panel) -->
+                            <Label Name="StartTime" Access="Public" Align="Center"
+                                   FontColorOverride="{x:Static maths:Color.DarkGray}"
+                                   StyleClasses="LabelBig" HorizontalExpand="True"
+                                   Margin="3 3 3 8" />
                             <widgets:ChatBox Name="Chat" Access="Public" VerticalExpand="True"
                                              Margin="3 3 3 3" />
                         </BoxContainer>
