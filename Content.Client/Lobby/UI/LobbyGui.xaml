@@ -47,17 +47,14 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                   Margin="10 10 10 10" SeparationOverride="2">
         <Control Name="DefaultState" VerticalExpand="True" HorizontalExpand="True">
             <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-                <!-- Top Panel -->
-                <BoxContainer Name="TopSide" Orientation="Horizontal" HorizontalExpand="True" MinSize="0 40" MaxSize="Infinity 40">
+                <!-- Top Panel (thin: extra lobby toolbar controls required by code) -->
+                <BoxContainer Name="TopSide" Orientation="Horizontal" HorizontalExpand="True" MinSize="0 34" MaxSize="Infinity 34">
                     <PanelContainer StyleClasses="TransparentBorderedWindowPanel" HorizontalExpand="True">
-                        <!-- Top Button Bar -->
                         <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3 3 3 3">
                             <info:LinkBanner Name="LinkBanner" VerticalExpand="True" />
                             <Button Name="AHelpButton" Access="Public" Text="{Loc 'ui-lobby-ahelp-button'}" />
                             <vote:VoteCallMenuButton Name="CallVoteButton" />
-                            <Button Name="OptionsButton" Access="Public" Text="{Loc 'ui-lobby-options-button'}" />
                             <whiteButtons:CustomGhostsMenuOpenButton Name="CustomGhostsButton" Text="{Loc 'ui-lobby-custom-ghosts-button'}" />
-                            <Button Name="LeaveButton" Access="Public" Text="{Loc 'ui-lobby-leave-button'}" />
                         </BoxContainer>
                     </PanelContainer>
                 </BoxContainer>
@@ -65,57 +62,89 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 <BoxContainer Orientation="Vertical" SeparationOverride="4" Name="VoteContainer"
                               Access="Public" HorizontalAlignment="Left" VerticalAlignment="Top"
                               Margin="20 60 0 0" />
-                <!-- Bottom Panel -->
-                <BoxContainer Name="BottomSide" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalExpand="True" VerticalExpand="True"
-                                  SeparationOverride="4" Margin="0 10 0 10">
-                    <PanelContainer StyleClasses="TransparentBorderedWindowPanel" HorizontalExpand="True"
-                                    SetHeight="390" Margin="0 0 2 0">
-                        <!-- Character Preview & Preferences -->
-                        <BoxContainer Orientation="Vertical">
+                <!-- Main 3-column "White Dream" layout -->
+                <BoxContainer Name="BottomSide" Orientation="Horizontal" VerticalAlignment="Stretch"
+                              HorizontalExpand="True" VerticalExpand="True"
+                              SeparationOverride="8" Margin="0 10 0 10">
+
+                    <!-- COLUMN 1: left menu (plain text items, no boxes) -->
+                    <BoxContainer Orientation="Vertical" MinSize="200 0" MaxSize="280 Infinity"
+                                  Margin="16 24 0 0" SeparationOverride="18">
+                        <Label Text="White Dream" StyleClasses="LabelHeadingBigger" Margin="0 0 0 0" />
+                        <Label Text="Not Ready" StyleClasses="LabelSecondaryColor" Margin="12 0 0 0" />
+                        <Control MinSize="0 24" />
+                        <ContainerButton Name="MenuObserveButton">
+                            <Label Text="Observe" StyleClasses="LabelBig" Margin="12 0 0 0" />
+                        </ContainerButton>
+                        <ContainerButton Name="MenuCharacterSetupButton">
+                            <Label Text="Character Setup" StyleClasses="LabelBig" Margin="12 0 0 0" />
+                        </ContainerButton>
+                        <ContainerButton Name="OptionsButton" Access="Public">
+                            <Label Text="Options" StyleClasses="LabelBig" Margin="12 0 0 0" />
+                        </ContainerButton>
+                        <ContainerButton Name="MenuDiscordButton">
+                            <Label Text="Привязать Discord" StyleClasses="LabelBig" Margin="12 0 0 0" />
+                        </ContainerButton>
+                        <ContainerButton Name="LeaveButton" Access="Public">
+                            <Label Text="Quit" StyleClasses="LabelBig" Margin="12 0 0 0" />
+                        </ContainerButton>
+                        <Control VerticalExpand="True" />
+                        <Label Text="Version: 1.0" StyleClasses="LabelSmall" HorizontalAlignment="Left" />
+                        <!-- Character preview & preferences: kept hidden for code wiring (not shown on this screen) -->
+                        <BoxContainer Name="HiddenCharacterArea" Visible="False" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
                             <lobbyUi:LobbyCharacterPreviewPanel Name="CharacterPreview" Access="Public" HorizontalExpand="True" VerticalExpand="True" />
                             <maidControls:CharacterPreferencesWidget Name="PreferencesWidget" Access="Public" HorizontalExpand="True" Margin="0 0 0 0"/>
                         </BoxContainer>
-                    </PanelContainer>
-                    <!-- Server Info & Ready -->
-                    <PanelContainer StyleClasses="TransparentBorderedWindowPanel" HorizontalExpand="True"
-                                        SetHeight="390" Margin="2 0 2 0">
-                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True"
-                                          Margin="8 8 8 8">
-                            <Label Name="ServerName" Access="Public" StyleClasses="LabelHeadingBigger"
-                                       VAlign="Center" HorizontalExpand="True" HorizontalAlignment="Center"
-                                       Margin="0 0 0 10" />
-                                <controls:StripeBack Margin="0 0 0 10">
-                                    <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="3 3 3 3">
-                                        <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public"
-                                                            HorizontalAlignment="Left"
-                                                            Text="{Loc 'ui-lobby-observe-button'}"
-                                                            StyleClasses="ButtonBig"
-                                                            WindowType="{x:Type lobbyUi:ObserveWarningWindow}" />
-                                        <Label Name="StartTime" Access="Public" Align="Center"
-                                               FontColorOverride="{x:Static maths:Color.DarkGray}"
-                                               StyleClasses="LabelBig" HorizontalExpand="True"
-                                               Margin="0 0 0 5" />
-                                        <Button Name="ReadyButton" Access="Public" ToggleMode="True"
-                                                HorizontalAlignment="Right"
-                                                Text="{Loc 'ui-lobby-ready-up-button'}"
-                                                StyleClasses="ButtonBig" MinWidth="137" />
-                                    </BoxContainer>
-                                </controls:StripeBack>
-                                <!-- Server info -->
-                                <info:ServerInfo Name="ServerInfo" Access="Public" MinSize="0 30"
-                                                 VerticalExpand="false" Margin="3 3 3 3"
-                                                 HorizontalAlignment="Left" />
-                                <Label Name="StationTime" Access="Public"
-                                       FontColorOverride="{x:Static maths:Color.LightGray}"
-                                       Margin="3 3 3 10" HorizontalAlignment="Left" />
+                    </BoxContainer>
+
+                    <!-- COLUMN 2: collapsible changelog + ready bar -->
+                    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True"
+                                  Margin="0 0 0 0" SeparationOverride="8">
+                        <!-- Collapsible changelog -->
+                        <Collapsible Name="ChangelogCollapsible" HorizontalExpand="True" VerticalExpand="True">
+                            <CollapsibleHeading Title="Список изменений:" />
+                            <CollapsibleBody VerticalExpand="True" HorizontalExpand="True">
+                                <RichTextLabel Name="ChangelogText" VerticalExpand="True" StyleClasses="LabelSmall" />
+                            </CollapsibleBody>
+                        </Collapsible>
+                        <!-- Ready bar: observe (left) / countdown (center) / ready (right) -->
+                        <controls:StripeBack Margin="0 0 0 0">
+                            <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="6 6 6 6">
+                                <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public"
+                                                    HorizontalAlignment="Left"
+                                                    Text="{Loc 'ui-lobby-observe-button'}"
+                                                    StyleClasses="ButtonBig"
+                                                    WindowType="{x:Type lobbyUi:ObserveWarningWindow}" />
+                                <Label Name="StartTime" Access="Public" Align="Center"
+                                       FontColorOverride="{x:Static maths:Color.DarkGray}"
+                                       StyleClasses="LabelBig" HorizontalExpand="True"
+                                       Margin="0 0 0 5" />
+                                <Button Name="ReadyButton" Access="Public" ToggleMode="True"
+                                        HorizontalAlignment="Right"
+                                        Text="{Loc 'ui-lobby-ready-up-button'}"
+                                        StyleClasses="ButtonBig" MinWidth="137" />
                             </BoxContainer>
-                    </PanelContainer>
-                    <!-- Chat -->
-                    <PanelContainer Access="Public" StyleClasses="TransparentBorderedWindowPanel"
-                                    HorizontalExpand="True" SetHeight="390"
-                                    Margin="2 0 0 0">
-                        <widgets:ChatBox Name="Chat" Access="Public" VerticalExpand="True"
-                                         Margin="3 3 3 3" />
+                        </controls:StripeBack>
+                    </BoxContainer>
+
+                    <!-- COLUMN 3: server info + chat (single panel, announcement is part of chat) -->
+                    <PanelContainer StyleClasses="TransparentBorderedWindowPanel"
+                                    MinSize="360 0" MaxSize="470 Infinity" Margin="0 0 0 0">
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True"
+                                      Margin="8 8 8 8" SeparationOverride="8">
+                            <Label Name="ServerName" Access="Public" StyleClasses="LabelHeadingBigger"
+                                   VAlign="Center" HorizontalExpand="True" HorizontalAlignment="Center"
+                                   Margin="0 0 0 10" />
+                            <Label Text="Серверная информация:" StyleClasses="LabelHeading" Margin="0 0 0 4" />
+                            <info:ServerInfo Name="ServerInfo" Access="Public" MinSize="0 30"
+                                             VerticalExpand="false" Margin="3 3 3 3"
+                                             HorizontalAlignment="Left" />
+                            <Label Name="StationTime" Access="Public"
+                                   FontColorOverride="{x:Static maths:Color.LightGray}"
+                                   Margin="3 3 3 10" HorizontalAlignment="Left" />
+                            <widgets:ChatBox Name="Chat" Access="Public" VerticalExpand="True"
+                                             Margin="3 3 3 3" />
+                        </BoxContainer>
                     </PanelContainer>
                 </BoxContainer>
             </BoxContainer>
