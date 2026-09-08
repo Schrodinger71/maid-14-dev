@@ -136,6 +136,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
+using Content.Client.Info;
 using Content.Client.PDA;
 using Content.Client.Resources;
 using Content.Client.Silicons.Laws.SiliconLawEditUi;
@@ -249,6 +250,13 @@ namespace Content.Client.Stylesheets
         public const string StyleClassButtonBig = "ButtonBig";
         public const string StyleClassMenuTextButton = "MenuTextButton";
 
+        // Maid: lobby font style classes (JetBrains Mono).
+        public const string StyleClassLobbyTitle = "LobbyTitle";
+        public const string StyleClassLobbyHeading = "LobbyHeading";
+        public const string StyleClassLobbyText = "LobbyText";
+        public const string StyleClassLobbyVersion = "LobbyVersion";
+        public const string StyleClassLobbyFont = "LobbyFontVT";
+
         public const string StyleClassButtonHelp = "HelpButton";
 
         public const string StyleClassPopupMessageSmall = "PopupMessageSmall";
@@ -353,6 +361,21 @@ namespace Content.Client.Stylesheets
             var robotoMonoBold11 = resCache.GetFont("/Fonts/RobotoMono/RobotoMono-Bold.ttf", size: 11);
             var robotoMonoBold12 = resCache.GetFont("/Fonts/RobotoMono/RobotoMono-Bold.ttf", size: 12);
             var robotoMonoBold14 = resCache.GetFont("/Fonts/RobotoMono/RobotoMono-Bold.ttf", size: 14);
+
+            // Maid: JetBrains Mono (full Cyrillic support) with NotoSans fallback for symbols/emoji.
+            Font MaidStack(int size) => resCache.GetFont(new[]
+            {
+                "/Fonts/_Maid/JetBrainsMono/JetBrainsMono-Regular.ttf",
+                "/Fonts/NotoSans/NotoSans-Regular.ttf",
+                "/Fonts/NotoSans/NotoSansSymbols-Regular.ttf",
+                "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf",
+                "/Fonts/NotoSans/NotoSansSC-Regular.ttf",
+            }, size);
+            var jbmMenu = MaidStack(12);
+            var jbmText = MaidStack(12);
+            var jbmHeading = MaidStack(16);
+            var jbmTitle = MaidStack(20);
+            var jbmVersion = MaidStack(10);
             var windowHeaderTex = resCache.GetTexture("/Textures/Interface/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
             {
@@ -2208,7 +2231,7 @@ namespace Content.Client.Stylesheets
                     new SelectorElement(typeof(Label), null, null, null)),
                     new[]
                     {
-                        new StyleProperty("font", notoSans16),
+                        new StyleProperty("font", jbmMenu),
                         new StyleProperty("font-color", menuTextButtonNormal),
                     }),
 
@@ -2217,7 +2240,7 @@ namespace Content.Client.Stylesheets
                     new SelectorElement(typeof(Label), null, null, null)),
                     new[]
                     {
-                        new StyleProperty("font", notoSans16),
+                        new StyleProperty("font", jbmMenu),
                         new StyleProperty("font-color", menuTextButtonHover),
                     }),
 
@@ -2226,8 +2249,44 @@ namespace Content.Client.Stylesheets
                     new SelectorElement(typeof(Label), null, null, null)),
                     new[]
                     {
-                        new StyleProperty("font", notoSans16),
+                        new StyleProperty("font", jbmMenu),
                         new StyleProperty("font-color", menuTextButtonPressed),
+                    }),
+
+                // Maid lobby: JetBrains Mono headings and body text.
+                Element<Label>().Class(StyleClassLobbyTitle)
+                    .Prop(Label.StylePropertyFont, jbmTitle)
+                    .Prop(Label.StylePropertyFontColor, Color.FromHex("#FFD34D")),
+
+                Element<Label>().Class(StyleClassLobbyHeading)
+                    .Prop(Label.StylePropertyFont, jbmHeading)
+                    .Prop(Label.StylePropertyFontColor, Color.FromHex("#F0C96A")),
+
+                Element<Label>().Class(StyleClassLobbyText)
+                    .Prop(Label.StylePropertyFont, jbmText)
+                    .Prop(Label.StylePropertyFontColor, Color.FromHex("#DCDCDC")),
+
+                Element<RichTextLabel>().Class(StyleClassLobbyText)
+                    .Prop(Label.StylePropertyFont, jbmText),
+
+                Element<Label>().Class(StyleClassLobbyVersion)
+                    .Prop(Label.StylePropertyFont, jbmVersion)
+                    .Prop(Label.StylePropertyFontColor, Color.DarkGray),
+
+                // Only swaps the font (keeps whatever color the other style class set).
+                Element<Label>().Class(StyleClassLobbyFont)
+                    .Prop(Label.StylePropertyFont, jbmText),
+
+                Element<RichTextLabel>().Class(StyleClassLobbyFont)
+                    .Prop(Label.StylePropertyFont, jbmText),
+
+                // ServerInfo is a BoxContainer whose child RichTextLabel shows the info blob.
+                new StyleRule(new SelectorChild(
+                    new SelectorElement(typeof(ServerInfo), new[] {StyleClassLobbyText}, null, null),
+                    new SelectorElement(typeof(RichTextLabel), null, null, null)),
+                    new[]
+                    {
+                        new StyleProperty("font", jbmText),
                     }),
             }).ToList());
         }

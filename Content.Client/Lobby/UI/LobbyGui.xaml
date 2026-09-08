@@ -59,7 +59,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                     <!-- COLUMN 1: left menu (plain text items, no boxes) -->
                     <BoxContainer Orientation="Vertical" MinSize="200 0" MaxSize="280 Infinity"
                                   Margin="16 24 0 0" SeparationOverride="14">
-                        <Label Text="Maid Cafe" StyleClasses="LabelHeadingBigger" Margin="0 0 0 0" />
+                        <Label Text="Maid Cafe" StyleClasses="LobbyTitle" Margin="0 0 0 0" />
 
                         <!-- Ready state toggle: shows "Not Ready"/"Ready" -->
                         <Button Name="ReadyButton" Access="Public" ToggleMode="True"
@@ -91,15 +91,15 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         <!-- Extra lobby tools moved from the top bar -->
                         <Button Name="AHelpButton" Access="Public" Text="{Loc 'ui-lobby-ahelp-button'}"
                                 HorizontalAlignment="Left" StyleClasses="MenuTextButton" Margin="12 0 0 0" />
-                        <vote:VoteCallMenuButton Name="CallVoteButton" StyleClasses="MenuTextButton" Margin="12 0 0 0" />
+                        <vote:VoteCallMenuButton Name="CallVoteButton" HorizontalAlignment="Left" StyleClasses="MenuTextButton" Margin="12 0 0 0" />
                         <whiteButtons:CustomGhostsMenuOpenButton Name="CustomGhostsButton" Text="{Loc 'ui-lobby-custom-ghosts-button'}"
-                                                                 StyleClasses="MenuTextButton" Margin="12 0 0 0" />
+                                                                 HorizontalAlignment="Left" StyleClasses="MenuTextButton" Margin="12 0 0 0" />
 
                         <Button Name="LeaveButton" Access="Public" Text="Quit" StyleClasses="MenuTextButton"
                                 HorizontalAlignment="Left" Margin="12 0 0 0" />
 
                         <Control VerticalExpand="True" />
-                        <Label Text="Version: 1.0" StyleClasses="LabelSmall" HorizontalAlignment="Left" />
+                        <Label Text="Version: 1.0" StyleClasses="LobbyVersion" HorizontalAlignment="Left" />
                         <!-- Character preview & preferences: kept hidden for code wiring (not shown on this screen) -->
                         <BoxContainer Name="HiddenCharacterArea" Visible="False" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
                             <lobbyUi:LobbyCharacterPreviewPanel Name="CharacterPreview" Access="Public" HorizontalExpand="True" VerticalExpand="True" />
@@ -118,9 +118,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         <ContainerButton Name="ChangelogToggleButton" Access="Public" ToggleMode="True"
                                          HorizontalAlignment="Left">
                             <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="2 2 2 2">
-                                <Label Name="ChangelogToggleArrow" Text="▼" StyleClasses="LabelHeading"
+                                <Label Name="ChangelogToggleArrow" Text="▼" StyleClasses="LobbyHeading"
                                        Margin="0 0 0 1" />
-                                <Label Text="Список изменений:" StyleClasses="LabelHeading" />
+                                <Label Text="Список изменений:" StyleClasses="LobbyHeading" />
                             </BoxContainer>
                         </ContainerButton>
                         <!-- Body: boxed panel, hidden entirely when collapsed -->
@@ -141,20 +141,20 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                     MinSize="360 0" MaxSize="470 Infinity" Margin="0 0 0 0">
                         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True"
                                       Margin="8 8 8 8" SeparationOverride="8">
-                            <Label Name="ServerName" Access="Public" StyleClasses="LabelHeadingBigger"
+                            <Label Name="ServerName" Access="Public" StyleClasses="LobbyTitle"
                                    VAlign="Center" HorizontalExpand="True" HorizontalAlignment="Center"
                                    Margin="0 0 0 10" />
-                            <Label Text="Серверная информация:" StyleClasses="LabelHeading" Margin="0 0 0 4" />
-                            <info:ServerInfo Name="ServerInfo" Access="Public" MinSize="0 30"
-                                             VerticalExpand="false" Margin="3 3 3 3"
+                            <Label Text="Серверная информация:" StyleClasses="LobbyHeading" Margin="0 0 0 4" />
+                            <info:ServerInfo Name="ServerInfo" Access="Public" StyleClasses="LobbyText"
+                                             MinSize="0 30" VerticalExpand="false" Margin="3 3 3 3"
                                              HorizontalAlignment="Left" />
-                            <Label Name="StationTime" Access="Public"
+                            <Label Name="StationTime" Access="Public" StyleClasses="LobbyText"
                                    FontColorOverride="{x:Static maths:Color.LightGray}"
                                    Margin="3 3 3 10" HorizontalAlignment="Left" />
                             <!-- Round start countdown (inside server info panel) -->
                             <Label Name="StartTime" Access="Public" Align="Center"
                                    FontColorOverride="{x:Static maths:Color.DarkGray}"
-                                   StyleClasses="LabelBig" HorizontalExpand="True"
+                                   StyleClasses="LobbyText" HorizontalExpand="True"
                                    Margin="3 3 3 8" />
                             <widgets:ChatBox Name="Chat" Access="Public" VerticalExpand="True"
                                              Margin="3 3 3 3" />

@@ -85,6 +85,8 @@ using System.Numerics;
 using Content.Client._RMC14.LinkAccount;
 using Content.Client.Audio;
 using Content.Client.Changelog;
+using Content.Client.Resources;
+using Content.Client.Stylesheets;
 using Content.Client.GameTicking.Managers;
 using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
@@ -98,6 +100,8 @@ using Robust.Client.Console;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using static Robust.Client.UserInterface.Control;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Robust.Shared.Configuration;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -250,7 +254,7 @@ namespace Content.Client.Lobby
                         body.AddChild(new Label
                         {
                             Text = dayNice,
-                            StyleClasses = { "LabelHeading" },
+                            StyleClasses = { "LabelHeading", StyleNano.StyleClassLobbyFont },
                             Margin = new Thickness(0, 4, 0, 2)
                         });
                         lastDay = day;
@@ -259,30 +263,33 @@ namespace Content.Client.Lobby
                     firstEntry = false;
 
                     var author = FormattedMessage.EscapeText(entry.Author);
-                    var authorLabel = new RichTextLabel { Margin = new Thickness(2, 2, 0, 0) };
+                    var authorLabel = new RichTextLabel
+                    {
+                        Margin = new Thickness(2, 2, 0, 0),
+                        StyleClasses = { StyleNano.StyleClassLobbyFont }
+                    };
                     authorLabel.SetMessage(FormattedMessage.FromMarkupOrThrow(
                         Loc.GetString("changelog-author-changed", ("author", author))));
                     body.AddChild(authorLabel);
 
                     foreach (var change in entry.Changes)
                     {
-                        var message = FormattedMessage.EscapeText(change.Message);
-                        var (marker, color) = change.Type switch
+                        var text = new RichTextLabel
                         {
-                            ChangelogManager.ChangelogLineType.Add => ("+", "#6ED18D"),
-                            ChangelogManager.ChangelogLineType.Remove => ("-", "#D16E6E"),
-                            ChangelogManager.ChangelogLineType.Fix => ("!", "#D1BA6E"),
-                            ChangelogManager.ChangelogLineType.Tweak => ("~", "#6E96D1"),
-                            _ => ("?", "#888888")
+                            StyleClasses = { StyleNano.StyleClassLobbyFont }
                         };
+                        text.SetMessage(FormattedMessage.FromUnformatted(change.Message));
 
-                        var changeLabel = new RichTextLabel
+                        body.AddChild(new BoxContainer
                         {
-                            Margin = new Thickness(14, 1, 0, 2)
-                        };
-                        changeLabel.SetMessage(FormattedMessage.FromMarkupOrThrow(
-                            $"[color={color}]{marker}[/color] {message}"));
-                        body.AddChild(changeLabel);
+                            Orientation = LayoutOrientation.Horizontal,
+                            Margin = new Thickness(14, 1, 0, 2),
+                            Children =
+                            {
+                                GetChangelogIcon(change.Type),
+                                text
+                            }
+                        });
                     }
                 }
             }
@@ -290,6 +297,27 @@ namespace Content.Client.Lobby
             {
                 _sawmill.Error($"Failed to load lobby changelog: {e}");
             }
+        }
+
+        private TextureRect GetChangelogIcon(ChangelogManager.ChangelogLineType type)
+        {
+            var (file, color) = type switch
+            {
+                ChangelogManager.ChangelogLineType.Add => ("plus.svg.192dpi.png", "#6ED18D"),
+                ChangelogManager.ChangelogLineType.Remove => ("minus.svg.192dpi.png", "#D16E6E"),
+                ChangelogManager.ChangelogLineType.Fix => ("bug.svg.192dpi.png", "#D1BA6E"),
+                ChangelogManager.ChangelogLineType.Tweak => ("wrench.svg.192dpi.png", "#6E96D1"),
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
+
+            return new TextureRect
+            {
+                Texture = _resourceCache.GetTexture($"/Textures/Interface/Changelog/{file}"),
+                VerticalAlignment = VAlignment.Top,
+                TextureScale = new Vector2(0.5f, 0.5f),
+                Margin = new Thickness(2, 4, 6, 2),
+                ModulateSelfOverride = Color.FromHex(color)
+            };
         }
 
         private void OnSetupPressed(BaseButton.ButtonEventArgs args)
