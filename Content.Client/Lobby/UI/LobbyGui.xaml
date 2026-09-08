@@ -65,43 +65,38 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         <Button Name="ReadyButton" Access="Public" ToggleMode="True"
                                 HorizontalAlignment="Left"
                                 Text="{Loc 'lobby-state-player-status-not-ready'}"
-                                StyleClasses="ButtonBig" MinWidth="137" />
+                                StyleClasses="MenuTextButton" Margin="12 0 0 0" />
 
-                        <ContainerButton Name="MenuCharacterSetupButton">
-                            <Label Text="Character Setup" StyleClasses="LabelBig" Margin="12 0 0 0" />
-                        </ContainerButton>
-                        <ContainerButton Name="MenuRulesButton">
-                            <Label Text="{Loc 'server-info-rules-button'}" StyleClasses="LabelBig" Margin="12 0 0 0" />
-                        </ContainerButton>
-                        <ContainerButton Name="MenuGuidebookButton">
-                            <Label Text="{Loc 'server-info-guidebook-button'}" StyleClasses="LabelBig" Margin="12 0 0 0" />
-                        </ContainerButton>
-                        <ContainerButton Name="MenuChangelogButton">
-                            <Label Text="{Loc 'changelog-button'}" StyleClasses="LabelBig" Margin="12 0 0 0" />
-                        </ContainerButton>
-                        <ContainerButton Name="OptionsButton" Access="Public">
-                            <Label Text="Options" StyleClasses="LabelBig" Margin="12 0 0 0" />
-                        </ContainerButton>
-                        <ContainerButton Name="MenuDiscordButton">
-                            <Label Text="Привязать Discord" StyleClasses="LabelBig" Margin="12 0 0 0" />
-                        </ContainerButton>
+                        <Button Name="MenuCharacterSetupButton" Text="Character Setup" StyleClasses="MenuTextButton"
+                                HorizontalAlignment="Left" Margin="12 0 0 0" />
+                        <Button Name="MenuRulesButton" Text="{Loc 'server-info-rules-button'}" StyleClasses="MenuTextButton"
+                                HorizontalAlignment="Left" Margin="12 0 0 0" />
+                        <Button Name="MenuGuidebookButton" Text="{Loc 'server-info-guidebook-button'}" StyleClasses="MenuTextButton"
+                                HorizontalAlignment="Left" Margin="12 0 0 0" />
+                        <Button Name="MenuChangelogButton" Text="{Loc 'changelog-button'}" StyleClasses="MenuTextButton"
+                                HorizontalAlignment="Left" Margin="12 0 0 0" />
+                        <Button Name="OptionsButton" Access="Public" Text="Options" StyleClasses="MenuTextButton"
+                                HorizontalAlignment="Left" Margin="12 0 0 0" />
+                        <Button Name="MenuDiscordButton" Text="Привязать Discord" StyleClasses="MenuTextButton"
+                                HorizontalAlignment="Left" Margin="12 0 0 0" />
 
                         <!-- Observe (with warning window) -->
                         <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public"
                                             HorizontalAlignment="Left"
                                             Text="{Loc 'ui-lobby-observe-button'}"
-                                            StyleClasses="LabelBig"
+                                            StyleClasses="MenuTextButton"
+                                            Margin="12 0 0 0"
                                             WindowType="{x:Type lobbyUi:ObserveWarningWindow}" />
 
                         <!-- Extra lobby tools moved from the top bar -->
                         <Button Name="AHelpButton" Access="Public" Text="{Loc 'ui-lobby-ahelp-button'}"
-                                HorizontalAlignment="Left" />
-                        <vote:VoteCallMenuButton Name="CallVoteButton" />
-                        <whiteButtons:CustomGhostsMenuOpenButton Name="CustomGhostsButton" Text="{Loc 'ui-lobby-custom-ghosts-button'}" />
+                                HorizontalAlignment="Left" StyleClasses="MenuTextButton" Margin="12 0 0 0" />
+                        <vote:VoteCallMenuButton Name="CallVoteButton" StyleClasses="MenuTextButton" Margin="12 0 0 0" />
+                        <whiteButtons:CustomGhostsMenuOpenButton Name="CustomGhostsButton" Text="{Loc 'ui-lobby-custom-ghosts-button'}"
+                                                                 StyleClasses="MenuTextButton" Margin="12 0 0 0" />
 
-                        <ContainerButton Name="LeaveButton" Access="Public">
-                            <Label Text="Quit" StyleClasses="LabelBig" Margin="12 0 0 0" />
-                        </ContainerButton>
+                        <Button Name="LeaveButton" Access="Public" Text="Quit" StyleClasses="MenuTextButton"
+                                HorizontalAlignment="Left" Margin="12 0 0 0" />
 
                         <Control VerticalExpand="True" />
                         <Label Text="Version: 1.0" StyleClasses="LabelSmall" HorizontalAlignment="Left" />

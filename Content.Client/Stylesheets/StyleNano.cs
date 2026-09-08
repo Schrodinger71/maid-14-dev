@@ -247,6 +247,7 @@ namespace Content.Client.Stylesheets
         public const string StyleClassLabelBig = "LabelBig";
         public const string StyleClassLabelSmall = "LabelSmall";
         public const string StyleClassButtonBig = "ButtonBig";
+        public const string StyleClassMenuTextButton = "MenuTextButton";
 
         public const string StyleClassButtonHelp = "HelpButton";
 
@@ -447,6 +448,15 @@ namespace Content.Client.Stylesheets
                 ContentMarginTopOverride = 1,
                 ContentMarginBottomOverride = 1,
             };
+
+            // Plain text menu buttons (lobby left menu): no box/background, just text.
+            var menuTextButtonStyle = new StyleBoxFlat
+            {
+                BackgroundColor = Color.Transparent,
+            };
+            var menuTextButtonNormal = Color.FromHex("#C9C9C9");
+            var menuTextButtonHover = Color.FromHex("#F0C96A");
+            var menuTextButtonPressed = Color.FromHex("#FFFFFF");
 
             var hotbarBackground = new StyleBoxTexture
             {
@@ -2162,6 +2172,63 @@ namespace Content.Client.Stylesheets
                 Element<PanelContainer>()
                     .Class(StyleClassInset)
                     .Prop(PanelContainer.StylePropertyPanel, insetBack),
+
+                // Lobby left menu: plain text buttons. No box, hover recolors the label.
+                // Only Button subclasses are used (Button restyles its inner Label on pseudo-class
+                // changes; plain ContainerButton would not recolor on hover).
+                Element<Button>()
+                    .Class(StyleClassMenuTextButton)
+                    .Prop(ContainerButton.StylePropertyStyleBox, menuTextButtonStyle),
+
+                // Button is deeper in the class hierarchy than plain ContainerButton, so the rules above
+                // must use typeof(Button) to out-specificity the default "button" class rules.
+
+                Element<Button>()
+                    .Class(StyleClassMenuTextButton)
+                    .Pseudo(Button.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, Color.White),
+
+                Element<Button>()
+                    .Class(StyleClassMenuTextButton)
+                    .Pseudo(Button.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, Color.White),
+
+                Element<Button>()
+                    .Class(StyleClassMenuTextButton)
+                    .Pseudo(Button.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, Color.White),
+
+                Element<Button>()
+                    .Class(StyleClassMenuTextButton)
+                    .Pseudo(Button.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, Color.White),
+
+                new StyleRule(new SelectorChild(
+                    new SelectorElement(typeof(Button), new[] {StyleClassMenuTextButton}, null, new[] {Button.StylePseudoClassNormal}),
+                    new SelectorElement(typeof(Label), null, null, null)),
+                    new[]
+                    {
+                        new StyleProperty("font", notoSans16),
+                        new StyleProperty("font-color", menuTextButtonNormal),
+                    }),
+
+                new StyleRule(new SelectorChild(
+                    new SelectorElement(typeof(Button), new[] {StyleClassMenuTextButton}, null, new[] {Button.StylePseudoClassHover}),
+                    new SelectorElement(typeof(Label), null, null, null)),
+                    new[]
+                    {
+                        new StyleProperty("font", notoSans16),
+                        new StyleProperty("font-color", menuTextButtonHover),
+                    }),
+
+                new StyleRule(new SelectorChild(
+                    new SelectorElement(typeof(Button), new[] {StyleClassMenuTextButton}, null, new[] {Button.StylePseudoClassPressed}),
+                    new SelectorElement(typeof(Label), null, null, null)),
+                    new[]
+                    {
+                        new StyleProperty("font", notoSans16),
+                        new StyleProperty("font-color", menuTextButtonPressed),
+                    }),
             }).ToList());
         }
     }
