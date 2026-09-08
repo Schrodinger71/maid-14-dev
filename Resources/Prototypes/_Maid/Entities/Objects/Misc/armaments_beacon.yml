@@ -31,9 +31,9 @@
     - ClothingOuterArmorWitchHunter
     - ClothingOuterArmorAdept
     helmets:
-    - ClothingHeadHelmedTemplarArmored
-    - ClothingHeadHelmetClock
-    - ClothingHeadHelmetCage
-    - ClothingHeadHelmetAncientChaplain
-    - ClothingHeadHelmetWitchHunter
-    - null
+    - ClothingHeadHatHelmetTemplar
+    - ClothingHeadHatHelmetClock
+    - ClothingHeadHatHelmetCage
+    - ClothingHeadHatHelmetAncient 
+    - ClothingHeadHatHelmetWitchhunter
+    - ClothingHeadHatHelmetAdept
