@@ -67,7 +67,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                 Text="{Loc 'lobby-state-player-status-not-ready'}"
                                 StyleClasses="MenuTextButton" Margin="12 0 0 0" />
 
-                        <Button Name="MenuCharacterSetupButton" Text="Character Setup" StyleClasses="MenuTextButton"
+                        <Button Name="MenuCharacterSetupButton" Text="{Loc 'ui-lobby-character-setup-button'}" StyleClasses="MenuTextButton"
                                 HorizontalAlignment="Left" Margin="12 0 0 0" />
                         <Button Name="MenuRulesButton" Text="{Loc 'server-info-rules-button'}" StyleClasses="MenuTextButton"
                                 HorizontalAlignment="Left" Margin="12 0 0 0" />
@@ -75,9 +75,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                 HorizontalAlignment="Left" Margin="12 0 0 0" />
                         <Button Name="MenuChangelogButton" Text="{Loc 'changelog-button'}" StyleClasses="MenuTextButton"
                                 HorizontalAlignment="Left" Margin="12 0 0 0" />
-                        <Button Name="OptionsButton" Access="Public" Text="Options" StyleClasses="MenuTextButton"
+                        <Button Name="OptionsButton" Access="Public" Text="{Loc 'ui-lobby-options-button'}" StyleClasses="MenuTextButton"
                                 HorizontalAlignment="Left" Margin="12 0 0 0" />
-                        <Button Name="MenuDiscordButton" Text="Привязать Discord" StyleClasses="MenuTextButton"
+                        <Button Name="MenuDiscordButton" Access="Public" Text="{Loc 'rmc-ui-link-discord-account'}" StyleClasses="MenuTextButton"
                                 HorizontalAlignment="Left" Margin="12 0 0 0" />
 
                         <!-- Observe (with warning window) -->
@@ -95,7 +95,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         <whiteButtons:CustomGhostsMenuOpenButton Name="CustomGhostsButton" Text="{Loc 'ui-lobby-custom-ghosts-button'}"
                                                                  HorizontalAlignment="Left" StyleClasses="MenuTextButton" Margin="12 0 0 0" />
 
-                        <Button Name="LeaveButton" Access="Public" Text="Quit" StyleClasses="MenuTextButton"
+                        <Button Name="LeaveButton" Access="Public" Text="{Loc 'ui-lobby-leave-button'}" StyleClasses="MenuTextButton"
                                 HorizontalAlignment="Left" Margin="12 0 0 0" />
 
                         <Control VerticalExpand="True" />

@@ -8,6 +8,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 ui-lobby-title = Lobby: {$serverName}
+ui-lobby-character-setup-button = Character Setup
 ui-lobby-ahelp-button = AHelp
 ui-lobby-options-button = Options
 ui-lobby-leave-button = Leave

@@ -344,6 +344,20 @@ namespace Content.Client.Lobby
         private void OnReadyToggled(BaseButton.ButtonToggledEventArgs args)
         {
             SetReady(args.Pressed);
+            UpdateReadyButtonColor();
+        }
+
+        // Maid: tint the ready button text green while the player is ready.
+        private void UpdateReadyButtonColor()
+        {
+            if (Lobby == null)
+                return;
+
+            // "Join" state while the round is running, or simply not ready -> default color.
+            if (_gameTicker.IsGameStarted || !Lobby.ReadyButton.Pressed)
+                Lobby.ReadyButton.Label.FontColorOverride = null;
+            else
+                Lobby.ReadyButton.Label.FontColorOverride = Color.FromHex("#6ED18D");
         }
 
         public override void FrameUpdate(FrameEventArgs e)
@@ -420,6 +434,8 @@ namespace Content.Client.Lobby
                 Lobby!.ReadyButton.Pressed = _gameTicker.AreWeReady;
                 Lobby!.ObserveButton.Disabled = true;
             }
+
+            UpdateReadyButtonColor();
 
             if (_gameTicker.ServerInfoBlob != null)
             {
