@@ -76,6 +76,16 @@ namespace Content.Client.Lobby.UI
             SetAnchorPreset(MainContainer, LayoutPreset.Wide);
             SetAnchorPreset(Background, LayoutPreset.Wide);
 
+            // DefaultState is a LayoutContainer: BottomSide fills it (with the 10px top/bottom inset),
+            // and the vote popups float at the top-left instead of pushing the layout down.
+            LayoutContainer.SetAnchorPreset(BottomSide, LayoutPreset.Wide);
+            LayoutContainer.SetMarginTop(BottomSide, 10);
+            LayoutContainer.SetMarginBottom(BottomSide, 10);
+
+            LayoutContainer.SetAnchorPreset(VoteContainer, LayoutPreset.TopLeft);
+            LayoutContainer.SetMarginLeft(VoteContainer, 20);
+            LayoutContainer.SetMarginTop(VoteContainer, 60);
+
             LeaveButton.OnPressed += _ => _consoleHost.ExecuteCommand("disconnect");
             OptionsButton.OnPressed += _ => UserInterfaceManager.GetUIController<OptionsUIController>().ToggleWindow();
             MenuDiscordButton.OnPressed += _ => UserInterfaceManager.GetUIController<LinkAccountUIController>().ToggleWindow();

@@ -45,20 +45,20 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     <animated:AnimatedBackgroundControl Access="Public" VerticalExpand="True" HorizontalExpand="True" Name="Background" /> <!-- Tweak-Maid: Animated Lobby -->
     <BoxContainer Name="MainContainer" VerticalExpand="True" HorizontalExpand="True" Orientation="Vertical"
                   Margin="10 10 10 10" SeparationOverride="2">
-        <Control Name="DefaultState" VerticalExpand="True" HorizontalExpand="True">
-            <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-                <!-- Voting Popups -->
-                <BoxContainer Orientation="Vertical" SeparationOverride="4" Name="VoteContainer"
-                              Access="Public" HorizontalAlignment="Left" VerticalAlignment="Top"
-                              Margin="20 60 0 0" />
-                <!-- Main 3-column "White Dream" layout -->
-                <BoxContainer Name="BottomSide" Orientation="Horizontal" VerticalAlignment="Stretch"
-                              HorizontalExpand="True" VerticalExpand="True"
-                              SeparationOverride="8" Margin="0 10 0 10">
+        <LayoutContainer Name="DefaultState" VerticalExpand="True" HorizontalExpand="True">
+            <!-- Voting popups: overlaid on top-left, must NOT push BottomSide down -->
+            <BoxContainer Orientation="Vertical" SeparationOverride="4" Name="VoteContainer"
+                          Access="Public" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <!-- Main 3-column "White Dream" layout -->
+            <BoxContainer Name="BottomSide" Orientation="Horizontal" VerticalAlignment="Stretch"
+                          HorizontalExpand="True" VerticalExpand="True"
+                          SeparationOverride="8" Margin="0 10 0 10">
 
                     <!-- COLUMN 1: left menu (plain text items, no boxes) -->
                     <BoxContainer Orientation="Vertical" MinSize="200 0" MaxSize="280 Infinity"
                                   Margin="16 24 0 0" SeparationOverride="14">
+                        <!-- Push the menu block to the vertical center of the column -->
+                        <Control VerticalExpand="True" />
                         <Label Text="Maid Cafe" StyleClasses="LobbyTitle" Margin="0 0 0 0" />
 
                         <!-- Ready state toggle: shows "Not Ready"/"Ready" -->
@@ -138,7 +138,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
                     <!-- COLUMN 3: server info + chat (single panel, announcement is part of chat) -->
                     <PanelContainer StyleClasses="TransparentBorderedWindowPanel"
-                                    MinSize="360 0" MaxSize="470 Infinity" Margin="0 0 0 0">
+                                    MinSize="360 0" MaxSize="470 Infinity" Margin="0 0 0 0"
+                                    VerticalExpand="True">
                         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True"
                                       Margin="8 8 8 8" SeparationOverride="8">
                             <Label Name="ServerName" Access="Public" StyleClasses="LobbyTitle"
@@ -161,8 +162,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         </BoxContainer>
                     </PanelContainer>
                 </BoxContainer>
-            </BoxContainer>
-        </Control>
+        </LayoutContainer>
         <!-- Character setup state -->
         <!-- This is injected on startup. Funky! -->
         <Control Access="Public" Visible="False" Name="CharacterSetupState" VerticalExpand="True" />
