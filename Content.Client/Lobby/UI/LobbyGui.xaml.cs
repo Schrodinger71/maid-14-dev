@@ -94,14 +94,6 @@ namespace Content.Client.Lobby.UI
             MenuGuidebookButton.OnPressed += _ => UserInterfaceManager.GetUIController<GuidebookUIController>().ToggleGuidebook();
             MenuChangelogButton.OnPressed += _ => UserInterfaceManager.GetUIController<ChangelogUIController>().ToggleWindow();
 
-            // Changelog collapse/expand toggle (starts expanded).
-            ChangelogToggleButton.Pressed = true;
-            ChangelogToggleButton.OnToggled += args =>
-            {
-                ChangelogBodyPanel.Visible = args.Pressed;
-                ChangelogToggleArrow.Text = args.Pressed ? "▼" : "▶";
-            };
-
             // Keep wheel scrolling but make the changelog scroll bars invisible.
             foreach (var child in ChangelogScrollContainer.Children)
             {
