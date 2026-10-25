@@ -2,7 +2,7 @@
                 xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                 HorizontalExpand="True">
     <PanelContainer.PanelOverride>
-        <gfx:StyleBoxFlat BorderThickness="3 0 0 0" BackgroundColor="#1b1b1e" />
+        <gfx:StyleBoxFlat BorderThickness="3 0 0 0" BackgroundColor="#2f2f35" />
     </PanelContainer.PanelOverride>
     <BoxContainer Orientation="Vertical" Margin="8 4">
         <Label Name="TitleLabel" StyleClasses="LabelSecondaryColor" />

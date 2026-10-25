@@ -4,13 +4,12 @@
                       Resizable="False"
                       MinWidth="750"
                       MinHeight="500">
-    <!-- Layout taken from wizden's PlantAnalyzerWindow, styles replaced with the ones maid has. -->
     <BoxContainer Orientation="Horizontal"
                   Margin="10 6 10 10"
                   SeparationOverride="6"
                   VerticalExpand="True">
 
-        <PanelContainer StyleClasses="Inset">
+        <PanelContainer StyleClasses="PlantAnalyzerColumn">
             <BoxContainer Orientation="Vertical"
                           MinWidth="250"
                           MaxWidth="250"
@@ -28,7 +27,7 @@
                             HorizontalAlignment="Center" />
 
                 <!-- Traits -->
-                <PanelContainer StyleClasses="PanelBackgroundBaseLight">
+                <PanelContainer StyleClasses="PlantAnalyzerSection">
                     <BoxContainer Name="TraitsSection" Orientation="Vertical" Margin="6 8">
                         <Label Text="{Loc 'botany-ui-section-traits'}" StyleClasses="LabelKeyText" />
                         <GridContainer Columns="3" HorizontalExpand="True">
@@ -64,7 +63,7 @@
                 </PanelContainer>
 
                 <!-- Warnings -->
-                <PanelContainer StyleClasses="PanelBackgroundBaseLight" VerticalExpand="True">
+                <PanelContainer StyleClasses="PlantAnalyzerSection" VerticalExpand="True">
                     <BoxContainer Orientation="Vertical" Margin="6 8">
                         <Label Text="{Loc 'botany-ui-section-warnings'}" StyleClasses="LabelKeyText" />
                         <BoxContainer Name="Warnings" Orientation="Vertical" />
@@ -79,7 +78,7 @@
                       SeparationOverride="4">
 
             <!-- Status -->
-            <PanelContainer Name="StatusSection" StyleClasses="PanelBackgroundBaseDark">
+            <PanelContainer Name="StatusSection" StyleClasses="PlantAnalyzerSection">
                 <BoxContainer Orientation="Vertical" Margin="6 8">
                     <Label Text="{Loc 'botany-ui-section-plant'}" StyleClasses="LabelKeyText" Margin="0 0 0 2" />
                     <GridContainer Columns="2" VSeparationOverride="6" HSeparationOverride="6" HorizontalExpand="True">
@@ -90,7 +89,7 @@
             </PanelContainer>
 
             <!-- Required conditions -->
-            <PanelContainer StyleClasses="PanelBackgroundBaseDark">
+            <PanelContainer StyleClasses="PlantAnalyzerSection">
                 <BoxContainer Orientation="Vertical" Margin="6 8">
                     <Label Text="{Loc 'botany-ui-section-conditions'}" StyleClasses="LabelKeyText" Margin="0 0 0 2" />
                     <GridContainer Columns="2" VSeparationOverride="6" HSeparationOverride="6" HorizontalExpand="True">
@@ -104,13 +103,13 @@
 
             <!-- Gas exchange -->
             <BoxContainer SeparationOverride="4">
-                <PanelContainer StyleClasses="PanelBackgroundBaseDark" HorizontalExpand="True">
+                <PanelContainer StyleClasses="PlantAnalyzerSection" HorizontalExpand="True">
                     <BoxContainer Orientation="Vertical" Margin="6 8">
                         <Label Text="{Loc 'botany-ui-section-consumed-gases'}" StyleClasses="LabelKeyText" Margin="0 0 0 2" />
                         <BoxContainer Name="Consumed" Orientation="Vertical" />
                     </BoxContainer>
                 </PanelContainer>
-                <PanelContainer StyleClasses="PanelBackgroundBaseDark" HorizontalExpand="True">
+                <PanelContainer StyleClasses="PlantAnalyzerSection" HorizontalExpand="True">
                     <BoxContainer Orientation="Vertical" Margin="6 8">
                         <Label Text="{Loc 'botany-ui-section-exuded-gases'}" StyleClasses="LabelKeyText" Margin="0 0 0 2" />
                         <BoxContainer Name="Exuded" Orientation="Vertical" />
@@ -119,7 +118,7 @@
             </BoxContainer>
 
             <!-- Harvest chemicals -->
-            <PanelContainer StyleClasses="PanelBackgroundBaseDark" VerticalExpand="True">
+            <PanelContainer StyleClasses="PlantAnalyzerSection" VerticalExpand="True">
                 <BoxContainer Orientation="Vertical" Margin="6 8">
                     <Label Text="{Loc 'botany-ui-section-chemicals'}" StyleClasses="LabelKeyText" Margin="0 0 0 2" />
                     <ScrollContainer MaxHeight="150" ReturnMeasure="True">
@@ -129,7 +128,7 @@
             </PanelContainer>
 
             <!-- Mutations -->
-            <PanelContainer StyleClasses="PanelBackgroundBaseDark" VerticalExpand="True">
+            <PanelContainer StyleClasses="PlantAnalyzerSection" VerticalExpand="True">
                 <BoxContainer Orientation="Vertical" Margin="6 8">
                     <Label Text="{Loc 'botany-ui-section-mutations'}" StyleClasses="LabelKeyText" Margin="0 0 0 2" />
                     <BoxContainer HorizontalExpand="True">

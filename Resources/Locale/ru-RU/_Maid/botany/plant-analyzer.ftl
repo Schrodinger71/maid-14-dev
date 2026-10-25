@@ -46,6 +46,8 @@ botany-ui-warnings-none = Предупреждений нет.
 botany-ui-unit-cycles = циклов
 
 plant-analyzer-dead = Растение погибло
+plant-analyzer-unit-u = ед.
+plant-analyzer-unit-mol = моль
 plant-analyzer-consumption = Расход: {$amount} ед./цикл
 plant-analyzer-warning-low-health = Растение в [color=red]плохом состоянии[/color].
 plant-analyzer-mutation-seedless = Без семян
