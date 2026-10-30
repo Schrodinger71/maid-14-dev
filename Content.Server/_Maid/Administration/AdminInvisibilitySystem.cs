@@ -43,7 +43,8 @@ public sealed class AdminInvisibilitySystem : SharedAdminInvisibilitySystem
 
     private void OnGetVisMask(Entity<AdminInvisibilityComponent> ent, ref GetVisMaskEvent args)
     {
-        args.VisibilityMask |= (int) VisibilityFlags.Admin;
+        if (ent.Comp.LifeStage <= ComponentLifeStage.Running)
+            args.VisibilityMask |= (int) VisibilityFlags.Admin;
     }
 
     private void OnToggleAction(Entity<AdminInvisibilityComponent> ent, ref ToggleAdminInvisibilityActionEvent args)
